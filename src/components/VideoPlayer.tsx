@@ -351,6 +351,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       onError={(error) => {
         console.error('Erro no player:', error);
       }}
+      onReady={() => {
+        console.log('VideoPlayer pronto');
+      }}
+      onPlay={() => {
+        console.log('VideoPlayer iniciado');
+      }}
+      onPause={() => {
+        console.log('VideoPlayer pausado');
+      }}
     />
   );
 };

@@ -10,6 +10,8 @@ interface SimpleDirectPlayerProps {
   onError?: (error: any) => void;
   onReady?: () => void;
   onEnded?: () => void;
+  onPlay?: () => void;
+  onPause?: () => void;
 }
 
 const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
@@ -20,7 +22,9 @@ const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
   className = '',
   onError,
   onReady,
-  onEnded
+  onEnded,
+  onPlay,
+  onPause
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -108,6 +112,8 @@ const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
       if (onReady) onReady();
     };
 
+      if (onPause) onPause();
+      if (onPlay) onPlay();
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
     const handleEnded = () => {
@@ -163,7 +169,7 @@ const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
       video.removeEventListener('error', handleError);
     };
   }, [onReady, onPlay, onPause, onEnded, onError]);
-
+  }, [onError, onReady, onEnded, onPlay, onPause]);
   // Auto-hide controles
   useEffect(() => {
     let timeout: NodeJS.Timeout;

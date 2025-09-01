@@ -1036,6 +1036,15 @@ const ConversaoVideos: React.FC = () => {
                 onReady={() => {
                   console.log('Player de conversão pronto');
                 }}
+                onPlay={() => {
+                  console.log('Vídeo de conversão iniciado');
+                }}
+                onPause={() => {
+                  console.log('Vídeo de conversão pausado');
+                }}
+                onEnded={() => {
+                  console.log('Vídeo de conversão finalizado');
+                }}
               />
             </div>
           </div>

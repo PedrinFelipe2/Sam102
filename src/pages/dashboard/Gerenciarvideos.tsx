@@ -1135,6 +1135,15 @@ const GerenciarVideos: React.FC = () => {
                 }}
                 onReady={() => {
                   console.log('Player pronto para reprodução');
+                onPlay={() => {
+                  console.log('Vídeo iniciado');
+                }}
+                onPause={() => {
+                  console.log('Vídeo pausado');
+                }}
+                onEnded={() => {
+                  console.log('Vídeo finalizado');
+                }}
                 }}
               />
             </div>
