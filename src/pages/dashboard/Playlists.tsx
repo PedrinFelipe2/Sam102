@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ChevronDown, ChevronRight, PlusCircle, X, Edit2, Trash2, Play, Minimize, Maximize } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
-import SimpleHTML5Player from '../../components/SimpleHTML5Player';
+import SimpleDirectPlayer from '../../components/SimpleDirectPlayer';
 
 import {
   DndContext,
