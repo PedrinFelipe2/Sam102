@@ -1128,6 +1128,9 @@ const GerenciarVideos: React.FC = () => {
                 autoplay
                 controls
                 className="w-full h-full"
+                onPlay={() => console.log('Vídeo iniciado')}
+                onPause={() => console.log('Vídeo pausado')}
+                onEnded={() => console.log('Vídeo finalizado')}
                 onError={(e) => {
                   console.error('Erro no player:', e);
                   // Fallback: abrir em nova aba
@@ -1135,15 +1138,6 @@ const GerenciarVideos: React.FC = () => {
                 }}
                 onReady={() => {
                   console.log('Player pronto para reprodução');
-                onPlay={() => {
-                  console.log('Vídeo iniciado');
-                }}
-                onPause={() => {
-                  console.log('Vídeo pausado');
-                }}
-                onEnded={() => {
-                  console.log('Vídeo finalizado');
-                }}
                 }}
               />
             </div>

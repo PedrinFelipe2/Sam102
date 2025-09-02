@@ -197,6 +197,11 @@ const dadosConexaoRoutes = require('./routes/dados-conexao');
       let wowzaUser = 'admin';
       let wowzaPassword = 'FK38Ca2SuE6jvJXed97VMn';
       
+      // Em produção, usar sempre o domínio principal
+      if (isProduction) {
+        wowzaHost = 'samhost.wcore.com.br';
+      }
+      
       try {
         // Buscar servidor baseado no usuário logado
         const [userServerRows] = await db.execute(
@@ -215,7 +220,12 @@ const dadosConexaoRoutes = require('./routes/dados-conexao');
           
           if (serverRows.length > 0) {
             const server = serverRows[0];
-            wowzaHost = server.dominio || server.ip; // Priorizar domínio
+            // Em produção, sempre usar domínio principal. Em dev, usar servidor específico
+            if (isProduction) {
+              wowzaHost = 'samhost.wcore.com.br';
+            } else {
+              wowzaHost = server.dominio || server.ip;
+            }
             wowzaPassword = server.senha_root || wowzaPassword;
             console.log(`✅ Usando servidor dinâmico: ${wowzaHost} (Servidor ID: ${serverId})`);
           } else {
@@ -364,6 +374,11 @@ const dadosConexaoRoutes = require('./routes/dados-conexao');
       let wowzaUser = 'admin';
       let wowzaPassword = 'FK38Ca2SuE6jvJXed97VMn';
       
+      // Em produção, usar sempre o domínio principal
+      if (isProduction) {
+        wowzaHost = 'samhost.wcore.com.br';
+      }
+      
       try {
         // Buscar servidor baseado no usuário
         const [userServerRows] = await db.execute(
@@ -382,7 +397,12 @@ const dadosConexaoRoutes = require('./routes/dados-conexao');
           
           if (serverRows.length > 0) {
             const server = serverRows[0];
-            wowzaHost = server.dominio || server.ip;
+            // Em produção, sempre usar domínio principal. Em dev, usar servidor específico
+            if (isProduction) {
+              wowzaHost = 'samhost.wcore.com.br';
+            } else {
+              wowzaHost = server.dominio || server.ip;
+            }
             wowzaPassword = server.senha_root || wowzaPassword;
             console.log(`✅ Wowza-direct usando servidor dinâmico: ${wowzaHost} (ID: ${serverId})`);
           }
@@ -434,8 +454,13 @@ const dadosConexaoRoutes = require('./routes/dados-conexao');
         let wowzaUser = 'admin';
         let wowzaPassword = 'FK38Ca2SuE6jvJXed97VMn';
         
+        // Em produção, usar sempre o domínio principal
+        if (isProduction) {
+          wowzaHost = 'samhost.wcore.com.br';
+        }
+        
         try {
-          // Buscar servidor baseado no usuário
+          // Buscar servidor baseado no usuário logado
           const [userServerRows] = await db.execute(
             'SELECT codigo_servidor FROM streamings WHERE codigo_cliente = ? OR login = ? LIMIT 1',
             [decoded.userId, userLogin]
@@ -452,7 +477,12 @@ const dadosConexaoRoutes = require('./routes/dados-conexao');
             
             if (serverRows.length > 0) {
               const server = serverRows[0];
-              wowzaHost = server.dominio || server.ip;
+              // Em produção, sempre usar domínio principal. Em dev, usar servidor específico
+              if (isProduction) {
+                wowzaHost = 'samhost.wcore.com.br';
+              } else {
+                wowzaHost = server.dominio || server.ip;
+              }
               wowzaPassword = server.senha_root || wowzaPassword;
               console.log(`✅ API Wowza usando servidor dinâmico: ${wowzaHost} (ID: ${serverId})`);
             }

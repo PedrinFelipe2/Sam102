@@ -63,7 +63,7 @@ export class VideoUrlBuilder {
    * Obtém o domínio baseado no ambiente
    */
   private static getDomain(): string {
-    const isProduction = window.location.hostname !== 'localhost';
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
     return isProduction ? this.PRODUCTION_DOMAIN : this.DEV_DOMAIN;
   }
 

@@ -929,13 +929,14 @@ const Playlists: React.FC = () => {
 
             {/* Player Universal */}
             <div className={`w-full h-full ${isFullscreen ? 'p-0' : 'p-4 pt-16'}`}>
-              <SimpleHTML5Player
+              <SimpleDirectPlayer
                 src={currentVideoUrl}
                 title={playlistVideosToPlay[playlistPlayerIndex]?.nome}
-                isLive={false}
                 autoplay={true}
-                controls
+                controls={true}
                 className="w-full h-full"
+                onPlay={() => console.log('Playlist vídeo iniciado')}
+                onPause={() => console.log('Playlist vídeo pausado')}
                 onEnded={handleVideoEnded}
                 onError={(error) => {
                   console.error('Erro no player:', error);

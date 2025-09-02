@@ -1029,21 +1029,15 @@ const ConversaoVideos: React.FC = () => {
                 autoplay
                 controls
                 className="w-full h-full"
+                onPlay={() => console.log('Vídeo de conversão iniciado')}
+                onPause={() => console.log('Vídeo de conversão pausado')}
+                onEnded={() => console.log('Vídeo de conversão finalizado')}
                 onError={(e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
                   console.error('Erro no player:', e);
                   toast.error('Erro ao carregar vídeo. Tente abrir em nova aba.');
                 }}
                 onReady={() => {
                   console.log('Player de conversão pronto');
-                }}
-                onPlay={() => {
-                  console.log('Vídeo de conversão iniciado');
-                }}
-                onPause={() => {
-                  console.log('Vídeo de conversão pausado');
-                }}
-                onEnded={() => {
-                  console.log('Vídeo de conversão finalizado');
                 }}
               />
             </div>
