@@ -22,6 +22,14 @@ class VideoURLBuilder {
     // Obter domínio do servidor Wowza
     async getWowzaDomain(serverId = null) {
         try {
+            // Verificar se estamos em produção
+            const isProduction = process.env.NODE_ENV === 'production';
+            
+            if (isProduction) {
+                // Em produção, sempre usar o domínio principal
+                return 'samhost.wcore.com.br';
+            }
+            
             let query = 'SELECT dominio, ip FROM wowza_servers WHERE status = "ativo"';
             let params = [];
 
@@ -36,13 +44,17 @@ class VideoURLBuilder {
             
             if (rows.length > 0) {
                 const server = rows[0];
+                // Em desenvolvimento, usar domínio específico ou IP
                 return server.dominio || server.ip || 'stmv1.udicast.com';
             }
             
-            return 'stmv1.udicast.com'; // Fallback padrão
+            // Fallback baseado no ambiente
+            return isProduction ? 'samhost.wcore.com.br' : 'stmv1.udicast.com';
         } catch (error) {
             console.error('Erro ao obter domínio do servidor:', error);
-            return 'stmv1.udicast.com'; // Fallback em caso de erro
+            // Fallback baseado no ambiente
+            const isProduction = process.env.NODE_ENV === 'production';
+            return isProduction ? 'samhost.wcore.com.br' : 'stmv1.udicast.com';
         }
     }
 

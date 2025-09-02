@@ -3,8 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Play, Zap, Users, Globe } from 'lucide-react';
 
 const AuthLayout: React.FC = () => {
-  const [logoErrorDesktop, setLogoErrorDesktop] = React.useState(false);
-  const [logoErrorMobile, setLogoErrorMobile] = React.useState(false);
+  const [logoError, setLogoError] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex">
@@ -21,11 +20,12 @@ const AuthLayout: React.FC = () => {
           {/* Logo moderna */}
           <div className="mb-8 flex items-center justify-center">
             <div className="relative">
-              {!logoErrorDesktop ? (
+              {!logoError ? (
                 <img
                   src="/logo.png"
                   alt="Logo"
                   className="w-80 h-80 object-contain" // 12rem = 192px
+                  onError={() => setLogoError(true)}
                 />
               ) : (
                 <div className="w-32 h-32 bg-gradient-to-br from-purple-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-2xl">
@@ -86,11 +86,12 @@ const AuthLayout: React.FC = () => {
           <div className="bg-white p-8 rounded-2xl shadow-2xl border border-gray-100">
             {/* Logo mobile */}
             <div className="flex justify-center mb-8 lg:hidden">
-              {!logoErrorMobile ? (
+              {!logoError ? (
                 <img
                   src="/logo.png"
                   alt="Logo"
                   className="w-48 h-48 object-contain" // 12rem = 192px
+                  onError={() => setLogoError(true)}
                 />
               ) : (
                 <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">

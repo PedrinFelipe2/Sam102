@@ -10,6 +10,8 @@ interface SimpleDirectPlayerProps {
   onError?: (error: any) => void;
   onReady?: () => void;
   onEnded?: () => void;
+  onPlay?: () => void;
+  onPause?: () => void;
 }
 
 const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
@@ -20,7 +22,9 @@ const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
   className = '',
   onError,
   onReady,
-  onEnded
+  onEnded,
+  onPlay,
+  onPause
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,8 +60,8 @@ const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
       // Garantir que é MP4
       const finalFileName = fileName.endsWith('.mp4') ? fileName : fileName.replace(/\.[^/.]+$/, '.mp4');
       
-      // Usar padrão do exemplo: https://stmv1.udicast.com:1443/play.php?login=usuario&video=pasta/arquivo.mp4
-      const isProduction = window.location.hostname !== 'localhost';
+      // Usar domínio correto baseado no ambiente
+      const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
       const domain = isProduction ? 'samhost.wcore.com.br' : 'stmv1.udicast.com';
       
       return `https://${domain}:1443/play.php?login=${userLogin}&video=${folderName}/${finalFileName}`;
@@ -108,8 +112,16 @@ const SimpleDirectPlayer: React.FC<SimpleDirectPlayerProps> = ({
       if (onReady) onReady();
     };
 
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
+    const handlePlay = () => {
+      setIsPlaying(true);
+      if (onPlay) onPlay();
+    };
+
+    const handlePause = () => {
+      setIsPlaying(false);
+      if (onPause) onPause();
+    };
+
     const handleEnded = () => {
       setIsPlaying(false);
       if (onEnded) onEnded();

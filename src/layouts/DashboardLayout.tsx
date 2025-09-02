@@ -23,7 +23,7 @@ const DashboardLayout: React.FC = () => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [logoError, setLogoError] = useState(false); // ✅ Fallback para logo
+  const [logoError, setLogoError] = useState(false);
   const { user, logout, getToken } = useAuth();
   const location = useLocation();
 
@@ -148,11 +148,18 @@ const DashboardLayout: React.FC = () => {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="flex items-center px-4 border-b border-gray-200">
-            <img
-              src="/logo.png"
-              alt="Logo"
-              className="w-30 h-30 mr-3 object-contain" // Apenas a logo
-            />
+            {!logoError ? (
+              <img
+                src="/logo.png"
+                alt="Logo"
+                className="w-30 h-30 mr-3 object-contain"
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mr-3">
+                <Play className="h-8 w-8 text-white" />
+              </div>
+            )}
           </div>
 
 
