@@ -98,13 +98,17 @@ router.get('/obs-config', authMiddleware, async (req, res) => {
       warnings.push('Wowza API indisponível - funcionando em modo degradado');
     }
 
+    // Configurar URLs baseadas no ambiente
+    const isProduction = process.env.NODE_ENV === 'production';
+    const streamingHost = isProduction ? 'samhost.wcore.com.br' : 'samhost.wcore.com.br';
+    
     // Resposta final
     res.json({
       success: true,
       obs_config: {
-        rtmp_url: `rtmp://samhost.wcore.com.br:1935/${userLogin}`,
+        rtmp_url: `rtmp://${streamingHost}:1935/${userLogin}`,
         stream_key: `${userLogin}_live`,
-        hls_url: `http://samhost.wcore.com.br:1935/${userLogin}/${userLogin}_live/playlist.m3u8`,
+        hls_url: `http://${streamingHost}:1935/${userLogin}/${userLogin}_live/playlist.m3u8`,
         max_bitrate: allowedBitrate,
         max_viewers: userConfig.espectadores,
         recording_enabled: userConfig.status_gravando === 'sim',

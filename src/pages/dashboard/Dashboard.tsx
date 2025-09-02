@@ -431,6 +431,8 @@ const Dashboard: React.FC = () => {
                   autoplay={false}
                   controls={true}
                   className="w-full h-full"
+                  onPlay={() => console.log('VideoPlayer iniciado')}
+                  onPause={() => console.log('VideoPlayer pausado')}
                   onError={(error) => {
                     console.error('Erro no player do dashboard:', error);
                   }}
